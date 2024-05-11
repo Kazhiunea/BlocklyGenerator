@@ -28,10 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const language = this.getAttribute('id').replace('Button', '');
             switchToolbox(language);
-            document.querySelectorAll('.section').forEach(div => {
-                div.style.display = 'none';
-            });
-            document.getElementById(`sourceCode${language.toUpperCase()}`).style.display = 'block';
         });
     });
 
@@ -60,24 +56,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function myUpdateFunction(event) {
         console.log("This function is working");
-        var code = HTMLGenerator.workspaceToCode(workspace);
-        document.getElementById('sourceCodeHTML').innerText = code;
-        var previewDocument = document.getElementById("preview").contentWindow.document;
-        previewDocument.body.innerHTML = '';
-        previewDocument.body.innerHTML = code;
+        updateSourceCode(workspace.options.language);
     }
 
     function switchToolbox(language) {
-        workspace.updateToolbox(toolboxes[language]);  // Changes the toolbox displayed in the Blockly workspace
-        workspace.options.language = language;  // Stores the current language as a property of the workspace for reference
-        updateSourceCode(language);  // Calls function to update the source code area
-        updateLivePreview();  // Updates the live preview area
+        // Reinitialize the workspace with the new toolbox
+        document.getElementById('blocklyWorkbench').innerHTML = '';  // Clear existing Blockly DOM
+        workspace = Blockly.inject('blocklyWorkbench', {
+            toolbox: toolboxes[language],
+            scrollbars: true,
+            trashcan: true
+        });
+        workspace.addChangeListener(myUpdateFunction);
+        updateLivePreview();
     }
+
 
     function updateSourceCode(language) {
         var codeGenerator = Blockly[language.charAt(0).toUpperCase() + language.slice(1)];
-        codes[language] = codeGenerator.workspaceToCode(workspace);
-        document.getElementById(`sourceCode${language.toUpperCase()}`).innerText = codes[language];
+        var code = codeGenerator.workspaceToCode(workspace);  // Use the appropriate generator
+        document.getElementById(`sourceCode${language.toUpperCase()}`).innerText = code;
+        updateLivePreview();  // Assuming this function also needs to be aware of the current language
     }
     
     function updateLivePreview() {
@@ -85,15 +84,15 @@ document.addEventListener('DOMContentLoaded', function() {
         previewFrame.open();
         previewFrame.write(
             `<!DOCTYPE html>
-    <html>
-    <head>
-    <style>${codes.css}</style>
-    </head>
-    <body>
-    ${codes.html}
-    <script>${codes.javascript}</script>
-    </body>
-    </html>`
+<html>
+<head>
+<style>${toolboxes.css ? Blockly.CSS.workspaceToCode(workspace) : ''}</style>
+</head>
+<body>
+${Blockly.HTML ? Blockly.HTML.workspaceToCode(workspace) : ''}
+<script>${Blockly.JavaScript ? Blockly.JavaScript.workspaceToCode(workspace) : ''}</script>
+</body>
+</html>`
         );
         previewFrame.close();
     }
