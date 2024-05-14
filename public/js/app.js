@@ -5,50 +5,51 @@ document.addEventListener('DOMContentLoaded', function() {
         javascript: javaScriptToolbox
     };
 
-    // Initialize Blockly with the first toolbox (HTML)
-    var workspace = Blockly.inject('blocklyWorkbench', {
-        toolbox: toolboxes.html,
-        scrollbars: true,
-        trashcan: true
-    });
+    let workspace;  // Define workspace at a higher scope
+    let currentLanguage = 'html';  // Default language
 
-    // Listen to button clicks to switch toolboxes
+    // Function to initialize Blockly with the correct toolbox
+    function initBlockly(toolbox, language) {
+        if (workspace) {
+            saveWorkspace(currentLanguage);  // Save current workspace before switching
+            workspace.dispose(); // Dispose the old workspace before reinitializing
+        }
+        workspace = Blockly.inject('blocklyWorkbench', {
+            toolbox: toolbox,
+            scrollbars: true,
+            trashcan: true
+        });
+        restoreWorkspace(language);  // Restore the workspace specific to the new language
+        workspace.addChangeListener(function(event) {
+            saveWorkspace(currentLanguage);  // Auto-save workspace on change
+        });
+        currentLanguage = language;  // Update current language
+    }
+
+    // Initially load HTML workspace
+    initBlockly(toolboxes.html, 'html');
+
+    // Setup button listeners to switch languages
     document.querySelectorAll('.nav-btn').forEach(button => {
         button.addEventListener('click', function() {
-            const language = this.id.replace('Button', '');
-            switchToolbox(toolboxes[language]);
+            const language = this.id.replace('Button', '').toLowerCase();
+            initBlockly(toolboxes[language], language);
         });
     });
 
-    function switchToolbox(newToolbox) {
-        // Clear the workspace
-        workspace.clear();
-
-        // Update the toolbox without re-injecting Blockly (assumes Blockly > v7.0)
-        workspace.updateToolbox(newToolbox);
-    }
-
-    function saveWorkspace(workspace) {
-        var xml = Blockly.Xml.workspaceToDom(workspace);
-        var xmlText = new XMLSerializer().serializeToString(xml);
-        localStorage.setItem('blocklyWorkspace', xmlText);
-    }
-
-    function restoreWorkspace(workspace) {
-        var xmlText = localStorage.getItem('blocklyWorkspace');
+    function restoreWorkspace(language) {
+        var xmlText = localStorage.getItem('blocklyWorkspace-' + language);
         if (xmlText) {
             var parser = new DOMParser();
             var xmlDoc = parser.parseFromString(xmlText, "text/xml");
-            // Updated method to use Blockly.utils.xml.textToDom
             Blockly.Xml.domToWorkspace(xmlDoc.firstChild, workspace);
         }
     }
 
-    // Restore workspace if available
-    restoreWorkspace(workspace);
-
-    // Setup listener to save the workspace automatically
-    workspace.addChangeListener(function(event) {
-        saveWorkspace(workspace);
-    });
+    function saveWorkspace(language) {
+        var xml = Blockly.Xml.workspaceToDom(workspace);
+        var serializer = new XMLSerializer();
+        var xmlText = serializer.serializeToString(xml);
+        localStorage.setItem('blocklyWorkspace-' + language, xmlText);
+    }
 });
