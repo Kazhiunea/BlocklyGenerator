@@ -1,22 +1,31 @@
-//The code generator
-var CSSGenerator = new Blockly.Generator('CSS');
-
-CSSGenerator.init = function(workspace) {
-    // You could initialize variables or configurations specific to CSS generation here
+Blockly.Blocks['css_padding'] = {
+    init: function() {
+        this.appendDummyInput()
+            .appendField("padding")
+            .appendField(new Blockly.FieldTextInput("0"), "PADDING");
+        this.setPreviousStatement(true, "CSS");
+        this.setNextStatement(true, "CSS");
+        this.setColour(160);
+        this.setTooltip("Sets the padding.");
+        this.setHelpUrl("");
+    }
 };
 
-CSSGenerator.finish = function(code) {
-    // This could be used to add final touches to the CSS code, such as formatting
-    return code.trim(); // Ensure the final output doesn't have leading/trailing whitespace
+// CSS Margin Block
+Blockly.Blocks['css_margin'] = {
+    init: function() {
+        this.appendDummyInput()
+            .appendField("margin")
+            .appendField(new Blockly.FieldTextInput("0"), "MARGIN");
+        this.setPreviousStatement(true, "CSS");
+        this.setNextStatement(true, "CSS");
+        this.setColour(160);
+        this.setTooltip("Sets the margin.");
+        this.setHelpUrl("");
+    }
 };
 
-CSSGenerator.scrub_ = function(block, code) {
-    var nextBlock = block.nextConnection && block.nextConnection.targetBlock();
-    var nextCode = nextBlock ? CSSGenerator.blockToCode(nextBlock) : '';
-    return code + nextCode; // Append the code of the next block, if it exists
-};
-
-//Selector block
+// CSS Selector Block
 Blockly.Blocks['css_selector'] = {
     init: function() {
         this.appendDummyInput()
@@ -32,51 +41,42 @@ Blockly.Blocks['css_selector'] = {
     }
 };
 
-Blockly.JavaScript['css_selector'] = function(block) {
-    var selector = block.getFieldValue('SELECTOR');
-    var statements_properties = Blockly.JavaScript.statementToCode(block, 'PROPERTIES');
-    var code = `${selector} {\n${statements_properties}}\n`;
+// Define the CSS generator
+Blockly.CSS = new Blockly.Generator('CSS');
+
+// Initialize the CSS code generation
+Blockly.CSS.init = function(workspace) {};
+
+// Finish the CSS code generation
+Blockly.CSS.finish = function(code) {
     return code;
 };
-///////////////////////////////////////////
 
-//Margin attribute
-Blockly.Blocks['css_margin'] = {
-    init: function() {
-        this.appendDummyInput()
-            .appendField("margin")
-            .appendField(new Blockly.FieldTextInput("0"), "MARGIN");
-        this.setPreviousStatement(true, "CSS");
-        this.setNextStatement(true, "CSS");
-        this.setColour(160);
-        this.setTooltip("Sets the margin.");
-        this.setHelpUrl("");
-    }
+// Scrub function for CSS blocks
+Blockly.CSS.scrub_ = function(block, code) {
+    var nextBlock = block.nextConnection && block.nextConnection.targetBlock();
+    var nextCode = Blockly.CSS.blockToCode(nextBlock);
+    return code + nextCode;
 };
 
-Blockly.JavaScript['css_margin'] = function(block) {
-    var margin = block.getFieldValue('MARGIN');
-    var code = `  margin: ${margin};\n`;
-    return code;
-};
-/////////////////////////////////////////////////////
-
-//Padding attribute
-Blockly.Blocks['css_padding'] = {
-    init: function() {
-        this.appendDummyInput()
-            .appendField("padding")
-            .appendField(new Blockly.FieldTextInput("0"), "PADDING");
-        this.setPreviousStatement(true, "CSS");
-        this.setNextStatement(true, "CSS");
-        this.setColour(160);
-        this.setTooltip("Sets the padding.");
-        this.setHelpUrl("");
-    }
-};
-
-Blockly.JavaScript['css_padding'] = function(block) {
+// CSS Padding Block Generator
+Blockly.CSS['css_padding'] = function(block) {
     var padding = block.getFieldValue('PADDING');
-    var code = `  padding: ${padding};\n`;
+    var code = 'padding: ' + padding + ';\n';
+    return code;
+};
+
+// CSS Margin Block Generator
+Blockly.CSS['css_margin'] = function(block) {
+    var margin = block.getFieldValue('MARGIN');
+    var code = 'margin: ' + margin + ';\n';
+    return code;
+};
+
+// CSS Selector Block Generator
+Blockly.CSS['css_selector'] = function(block) {
+    var selector = block.getFieldValue('SELECTOR');
+    var properties = Blockly.CSS.statementToCode(block, 'PROPERTIES');
+    var code = selector + ' {\n' + properties + '}\n';
     return code;
 };

@@ -98,101 +98,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_title.asp");
     }
   };
-  
-  
-  //////////////////////////////////////////////////////////////
-  //The HTML Code Generators:
-  var HTMLGenerator = new Blockly.Generator('HTML');
-  
-  HTMLGenerator.init = function(workspace) {};
-  HTMLGenerator.finish = function(code) {return code;};
-  
-  HTMLGenerator.scrub_ = function(block, code) {
-    var nextBlock = block.nextConnection && block.nextConnection.targetBlock();
-    var nextCode = HTMLGenerator.blockToCode(nextBlock);
-    return code + nextCode;
-  };
-  
-  
-  //Document Code Generator
-  HTMLGenerator['document'] = function(block) {
-    var content_of_conjoined = HTMLGenerator.statementToCode(block, 'content');
-    var code = '<!DOCTYPE HTML>\n<html>\n' + content_of_conjoined + '</html>\n';
-    return code;
-  };
-  
-  //Header Code Generator
-  HTMLGenerator['header'] = function(block) {
-    var content_of_conjoined = HTMLGenerator.statementToCode(block, 'content');
-    var code = '<head>\n  <meta charset="utf-8">\n' + content_of_conjoined + '</head>\n';
-    return code;
-  };
-  
-  //Title Code Generator
-  HTMLGenerator['title'] = function(block) {
-    var content_of_conjoined = HTMLGenerator.statementToCode(block, 'content');
-    var code = '<title>' + content_of_conjoined.trim() + '</title>\n';
-    return code;
-  };
-  
-  
-  //Text Code Generator
-  HTMLGenerator['text'] = function(block) {
-    var content_of_conjoined = block.getFieldValue('content');
-    var code = content_of_conjoined + '\n';
-    return code;
-  };
-  
-  //Paragraph Code Generator
-  HTMLGenerator['paragraph'] = function(block) {
-    var content_of_conjoined = HTMLGenerator.statementToCode(block, 'content');
-    var code = '<p>\n' + content_of_conjoined + '</p>\n';
-    return code;
-  };
-  
-  //Body Elemento 
-  HTMLGenerator['body'] = function(block) {
-    var content_of_conjoined = HTMLGenerator.statementToCode(block, 'content');
-    var code = '<body>\n' + content_of_conjoined + '</body>\n';
-    return code;
-  };
-  
-  //Image Elemento kodo generatorius
-  HTMLGenerator['image'] = function(block) {
-    var text_image = block.getFieldValue('IMAGE');
-    var text_alt = block.getFieldValue('ALT');
-    var code = '<img src="' +  text_image + '" alt="' + text_alt + '">\n';
-    return code;
-  };
-  
-  
-  
-  
-  //Aditionals:
-  
-  //bold:
-  //REPLACED
-  /*
-  Blockly.Blocks['strong'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("Bold Text");
-      this.appendStatementInput("content")
-          .setCheck(null);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(230);
-   this.setTooltip("");
-   this.setHelpUrl("");
-    }
-  };
-  
-  HTMLGenerator['strong'] = function(block) {
-  var content = HTMLGenerator.statementToCode(block, 'content');
-  var code = '<b>' + content + '</b>\n';
-  return code;
-  };*/
-  
+
   //new line
   Blockly.Blocks['newline'] = {
     init: function() {
@@ -205,12 +111,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_br.asp");
     }
   };
-  
-  HTMLGenerator['newline'] = function(block) {
-  return '<br>\n';
-  };
-  
-  
+
   //unordered list:
   Blockly.Blocks['unorderedList'] = {
     init: function() {
@@ -225,14 +126,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_ul.asp");
     }
   };
-  
-  HTMLGenerator['unorderedList'] = function(block) {
-  var statements_content = HTMLGenerator.statementToCode(block, 'content');
-  // Generating the HTML code for an unordered list
-  var code = '<ul>\n' + statements_content + '</ul>\n';
-  return code;
-  };
-  
+
   //ordered list
   Blockly.Blocks['orderedList'] = {
     init: function() {
@@ -247,13 +141,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_ol.asp");
     }
   };
-  
-  HTMLGenerator['orderedList'] = function(block) {
-  var statements_content = HTMLGenerator.statementToCode(block, 'content');
-  var code = '<ol>\n' + statements_content + '</ol>\n';
-  return code;
-  };
-  
+
   //list element
   Blockly.Blocks['listElem'] = {
     init: function() {
@@ -268,13 +156,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_li.asp");
     }
   };
-  
-  HTMLGenerator['listElem'] = function(block) {
-  var statements_content = HTMLGenerator.statementToCode(block, 'content');
-  var code = '<li>\n' + statements_content + '</li>\n';
-  return code;
-  };
-  
+
   //Aside
   Blockly.Blocks['aside'] = {
     init: function() {
@@ -299,17 +181,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_aside.asp");
     }
   };
-  
-  HTMLGenerator['aside'] = function(block) {
-    var width = block.getFieldValue('width');
-    var position = block.getFieldValue('position');
-    var colour = block.getFieldValue('colour');
-    var content = HTMLGenerator.statementToCode(block, 'NAME');
-  
-    return '<aside style="width:' + width + '%; float:' + position + '; background-color:' + colour + ';">\n' + content + '\n</aside>\n';
-  };
-  
-  //hyperlink
+
   Blockly.Blocks['hyperlink'] = {
     init: function() {
       this.appendDummyInput()
@@ -326,14 +198,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_a.asp");
     }
   };
-  
-  HTMLGenerator['hyperlink'] = function(block) {
-    var content = HTMLGenerator.statementToCode(block, 'NAME');
-    var link = block.getFieldValue('link');
-    var code = '<a href="' + link + '">' + content + '</a>';
-    return code;
-  };
-  
+
   //Description list
   Blockly.Blocks['descriptionList'] = {
     init: function() {
@@ -348,13 +213,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_dl.asp");
     }
   };
-  
-  HTMLGenerator['descriptionList'] = function(block) {
-  var statements_content = HTMLGenerator.statementToCode(block, 'content');
-  var code = '<dl>\n' + statements_content + '</dl>\n';
-  return code;
-  };
-  
+
   //Description item:
   Blockly.Blocks['descriptionItem'] = {
     init: function() {
@@ -373,13 +232,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_dt.asp");
     }
   };
-  
-  HTMLGenerator['descriptionItem'] = function(block) {
-    var itemInput = HTMLGenerator.statementToCode(block, 'NAME') || '\n';
-    var descriptionInput = HTMLGenerator.statementToCode(block, 'NAMEDescription') || '\n';
-    return '<dt>' + itemInput + '</dt>\n<dd>' + descriptionInput + '</dd>\n';
-  };
-  
+
   //Heading
   Blockly.Blocks['heading'] = {
     init: function() {
@@ -397,14 +250,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_hn.asp");
     }
   };
-  
-  HTMLGenerator['heading'] = function(block) {
-    var heading = block.getFieldValue('heading');
-    var text = block.getFieldValue('NAME');
-    return '<h' + heading[heading.length-1] + '>' + text + '</h' + heading[heading.length-1] + '>\n';
-  };
-  
-  
+
   //Text effects:
   Blockly.Blocks['textWithStyle'] = {
     init: function() {
@@ -426,37 +272,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("");
     }
   };
-  
-  HTMLGenerator['textWithStyle'] = function(block) {
-    var htmlCode = "";
-    var textStyle = block.getFieldValue('formating');
-    var textColour = block.getFieldValue('colour');
-    var text = block.getFieldValue('INPUT');
-    switch (textStyle) {
-      case "bold":
-        htmlCode = "<b style='color:" + textColour + ";'>" + text + "</b>";
-        break;
-      case "strikethrough":
-        htmlCode = "<s style='color:" + textColour + ";'>" + text + "</s>";
-        break;
-      case "underline":
-        htmlCode = "<u style='color:" + textColour + ";'>" + text + "</u>";
-        break;
-      case "italic":
-        htmlCode = "<i style='color:" + textColour + ";'>" + text + "</i>";
-        break;
-      case "subscribe":
-        htmlCode = "<sub style='color:" + textColour + ";'>" + text + "</sub>";
-        break;
-      case "superscribe":
-        htmlCode = "<sup style='color:" + textColour + ";'>" + text + "</sup>";
-        break;
-    }
-    return htmlCode;
-  };
-  
-  //Table
-  
+
   Blockly.Blocks['table'] = {
     init: function() {
       this.appendDummyInput()
@@ -476,14 +292,7 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_table.asp");
     }
   };
-  
-  HTMLGenerator['table'] = function(block) {
-  var borderSize = block.getFieldValue('borderSize');
-  var colour = block.getFieldValue('colour');
-  var content = HTMLGenerator.statementToCode(block, 'content');
-  return '<table style="border: ' + borderSize + 'px solid ' + colour + '">' + content + '</table>\n';
-  };
-  
+
   //Row
   Blockly.Blocks['tableRow'] = {
     init: function() {
@@ -504,38 +313,193 @@ Blockly.Blocks['image'] = {
    this.setHelpUrl("https://www.w3schools.com/tags/tag_tr.asp");
     }
   };
-  
-  HTMLGenerator['tableRow'] = function(block) {
-  var borderSize = block.getFieldValue('borderSize');
-  var colour = block.getFieldValue('colour');
-  var content = HTMLGenerator.statementToCode(block, 'content');
-  return '<tr style="border: ' + borderSize + 'px solid ' + colour + '">' + content + '</tr>\n';
-  };
-  
+
   //Table Entry
   Blockly.Blocks['tableElement'] = {
-   init: function() {
-      this.appendDummyInput()
-          .appendField("Table element");
-      this.appendDummyInput()
-          .appendField("Border size:")
-          .appendField(new Blockly.FieldNumber(0, 0, 10), "borderSize");
-      this.appendDummyInput()
-          .appendField("Border colour")
-          .appendField(new Blockly.FieldColour("#000000"), "colour");
-      this.appendStatementInput("content")
-          .setCheck(null);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(60);
-   this.setTooltip("The <td> tag defines a standard data cell in an HTML table.");
-   this.setHelpUrl("https://www.w3schools.com/tags/tag_td.asp");
-    }
-  };
+    init: function() {
+       this.appendDummyInput()
+           .appendField("Table element");
+       this.appendDummyInput()
+           .appendField("Border size:")
+           .appendField(new Blockly.FieldNumber(0, 0, 10), "borderSize");
+       this.appendDummyInput()
+           .appendField("Border colour")
+           .appendField(new Blockly.FieldColour("#000000"), "colour");
+       this.appendStatementInput("content")
+           .setCheck(null);
+       this.setPreviousStatement(true, null);
+       this.setNextStatement(true, null);
+       this.setColour(60);
+    this.setTooltip("The <td> tag defines a standard data cell in an HTML table.");
+    this.setHelpUrl("https://www.w3schools.com/tags/tag_td.asp");
+     }
+   };
+
   
-  HTMLGenerator['tableElement'] = function(block) {
-  var borderSize = block.getFieldValue('borderSize');
-  var colour = block.getFieldValue('colour');
-  var content = HTMLGenerator.statementToCode(block, 'content');
-  return '<td style="border: ' + borderSize + 'px solid ' + colour + '">' + content + '</td>\n';
-  };
+  
+   Blockly.HTML = new Blockly.Generator('HTML');
+
+   // Create the _blockToCode dictionary for HTML blocks
+   Blockly.HTML._blockToCode = {};
+   
+   Blockly.HTML.init = function(workspace) {
+       // Initialize the HTML code generation.
+   };
+   
+   Blockly.HTML.finish = function(code) {
+       return code;
+   };
+   
+   Blockly.HTML.scrub_ = function(block, code) {
+       var nextBlock = block.nextConnection && block.nextConnection.targetBlock();
+       var nextCode = Blockly.HTML.blockToCode(nextBlock);
+       return code + nextCode;
+   };
+   
+   Blockly.HTML['document'] = function(block) {
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<!DOCTYPE html>\n<html>\n' + statements_content + '</html>\n';
+       return code;
+   };
+   
+   Blockly.HTML['body'] = function(block) {
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<body>\n' + statements_content + '</body>\n';
+       return code;
+   };
+   
+   Blockly.HTML['header'] = function(block) {
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<header>\n' + statements_content + '</header>\n';
+       return code;
+   };
+   
+   Blockly.HTML['paragraph'] = function(block) {
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<p>\n' + statements_content + '</p>\n';
+       return code;
+   };
+   
+   Blockly.HTML['text'] = function(block) {
+       var text = block.getFieldValue('content');
+       var code = text + '\n';
+       return code;
+   };
+   
+   Blockly.HTML['title'] = function(block) {
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<title>\n' + statements_content + '</title>\n';
+       return code;
+   };
+   
+   Blockly.HTML['newline'] = function(block) {
+       var code = '<br>\n';
+       return code;
+   };
+   
+   Blockly.HTML['unorderedList'] = function(block) {
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<ul>\n' + statements_content + '</ul>\n';
+       return code;
+   };
+   
+   Blockly.HTML['orderedList'] = function(block) {
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<ol>\n' + statements_content + '</ol>\n';
+       return code;
+   };
+   
+   Blockly.HTML['listElem'] = function(block) {
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<li>\n' + statements_content + '</li>\n';
+       return code;
+   };
+   
+   Blockly.HTML['aside'] = function(block) {
+       var width = block.getFieldValue('width');
+       var position = block.getFieldValue('position');
+       var colour = block.getFieldValue('colour');
+       var statements_content = Blockly.HTML.statementToCode(block, 'NAME');
+       var code = '<aside style="width:' + width + '%; float:' + position + '; background-color:' + colour + ';">\n' + statements_content + '</aside>\n';
+       return code;
+   };
+   
+   Blockly.HTML['hyperlink'] = function(block) {
+       var link = block.getFieldValue('link');
+       var statements_content = Blockly.HTML.statementToCode(block, 'NAME');
+       var code = '<a href="' + link + '">\n' + statements_content + '</a>\n';
+       return code;
+   };
+   
+   Blockly.HTML['descriptionList'] = function(block) {
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<dl>\n' + statements_content + '</dl>\n';
+       return code;
+   };
+   
+   Blockly.HTML['descriptionItem'] = function(block) {
+       var item = Blockly.HTML.statementToCode(block, 'NAME');
+       var description = Blockly.HTML.statementToCode(block, 'NAMEDescription');
+       var code = '<dt>' + item + '</dt>\n<dd>' + description + '</dd>\n';
+       return code;
+   };
+   
+   Blockly.HTML['heading'] = function(block) {
+       var heading = block.getFieldValue('heading');
+       var text = block.getFieldValue('NAME');
+       var code = '<' + heading + '>' + text + '</' + heading + '>\n';
+       return code;
+   };
+   
+   Blockly.HTML['textWithStyle'] = function(block) {
+       var formating = block.getFieldValue('formating');
+       var colour = block.getFieldValue('colour');
+       var text = block.getFieldValue('INPUT');
+       var style = '';
+   
+       if (formating === 'bold') {
+           style += 'font-weight:bold;';
+       } else if (formating === 'italic') {
+           style += 'font-style:italic;';
+       } else if (formating === 'underline') {
+           style += 'text-decoration:underline;';
+       } else if (formating === 'strikethrough') {
+           style += 'text-decoration:line-through;';
+       } else if (formating === 'subscribe') {
+           text = '<sub>' + text + '</sub>';
+       } else if (formating === 'superscribe') {
+           text = '<sup>' + text + '</sup>';
+       }
+   
+       if (colour) {
+           style += 'color:' + colour + ';';
+       }
+   
+       var code = '<span style="' + style + '">' + text + '</span>\n';
+       return code;
+   };
+   
+   Blockly.HTML['table'] = function(block) {
+       var borderSize = block.getFieldValue('borderSize');
+       var colour = block.getFieldValue('colour');
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<table border="' + borderSize + '" style="border-color:' + colour + ';">\n' + statements_content + '</table>\n';
+       return code;
+   };
+   
+   Blockly.HTML['tableRow'] = function(block) {
+       var borderSize = block.getFieldValue('borderSize');
+       var colour = block.getFieldValue('colour');
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<tr style="border:' + borderSize + 'px solid ' + colour + ';">\n' + statements_content + '</tr>\n';
+       return code;
+   };
+   
+   Blockly.HTML['tableElement'] = function(block) {
+       var borderSize = block.getFieldValue('borderSize');
+       var colour = block.getFieldValue('colour');
+       var statements_content = Blockly.HTML.statementToCode(block, 'content');
+       var code = '<td style="border:' + borderSize + 'px solid ' + colour + ';">\n' + statements_content + '</td>\n';
+       return code;
+   };
+   
