@@ -1,86 +1,30 @@
-const htmlToolbox = {
-    'kind': 'flyoutToolbox',
-    'contents': [
-      {
-          'kind': 'block',
-          'type': 'document'
-      },
-      {
-          'kind': 'block',
-          'type': 'header'
-      },
-    {
-      'kind': 'block',
-      'type': 'body'
-    },
-    {
-      'kind': 'block',
-      'type': 'title'
-    },
-    {
-      'kind': 'block',
-      'type': 'paragraph'
-    },
-    {
-      'kind': 'block',
-      'type': 'aside'
-    },
-    {
-      'kind': 'block',
-      'type': 'text'
-    },
-    {
-      'kind': 'block',
-      'type': 'textWithStyle'
-    },
-    {
-      'kind': 'block',
-      'type': 'newline'
-    },
-    {
-      'kind': 'block',
-      'type': 'heading'
-    },
-    {
-      'kind': 'block',
-      'type': 'image'
-    },
-    {
-      'kind': 'block',
-      'type': 'hyperlink'
-    },
-    {
-      'kind': 'block',
-      'type': 'unorderedList'
-    },
-    {
-      'kind': 'block',
-      'type': 'orderedList'
-    },
-    {
-      'kind': 'block',
-      'type': 'listElem'
-    },
-    {
-      'kind': 'block',
-      'type': 'descriptionList'
-    }, 
-    {
-      'kind': 'block',
-      'type': 'descriptionItem'
-    },
-    
-    {
-      'kind': 'block',
-      'type': 'table'
-    },
-    {
-      'kind': 'block',
-      'type': 'tableRow'
-    },
-    {
-      'kind': 'block',
-      'type': 'tableElement'
-    }
-    ]
-  }
+const htmlToolbox = `
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+  <category name="Document Structure" colour="#ff9999">
+    <block type="body"></block>
+    <block type="title"></block>
+    <block type="paragraph"></block>
+  </category>
+  <category name="Text Elements" colour="#9999ff">
+    <block type="text"></block>
+    <block type="newline"></block>
+    <block type="heading"></block>
+  </category>
+  <category name="Lists" colour="#99cc99">
+    <block type="unorderedList"></block>
+    <block type="orderedList"></block>
+    <block type="listElem"></block>
+    <block type="descriptionList"></block>
+    <block type="descriptionItem"></block>
+  </category>
+  <category name="Tables" colour="#cccc99">
+    <block type="table"></block>
+    <block type="tableRow"></block>
+    <block type="tableElement"></block>
+  </category>
+  <category name="Multimedia" colour="310">
+    <block type="image"></block>
+    <block type="hyperlink"></block>
+  </category>
+</xml>
+`;
