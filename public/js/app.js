@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
         javascript: javaScriptToolbox
     };
 
-    let workspace; // Define workspace at a higher scope
+    let workspace;
     let currentLanguage = 'html'; // Default language
 
     function initBlockly(toolbox) {
         if (workspace) {
-            workspace.dispose(); // Dispose the old workspace before reinitializing
+            workspace.dispose();
         }
 
         workspace = Blockly.inject('blocklyWorkbench', {
@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
             trashcan: true
         });
 
-        restoreWorkspace(); // Restore the workspace for the current language
-        workspace.addChangeListener(buildCompleteCode); // Add a listener to update source code and live preview on change
+        restoreWorkspace();
+        workspace.addChangeListener(buildCompleteCode);
         Blockly.JavaScript.init(workspace);
         Blockly.HTML.init(workspace);
         Blockly.CSS.init(workspace);
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error restoring workspace:', e);
         }
 
-        // Update the source code display
         updateSourceCodeDisplay();
     }
 
@@ -48,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var xmlText = Blockly.Xml.domToText(xml);
         localStorage.setItem('blocklyWorkspace-' + currentLanguage, xmlText);
 
-        // Save the combined code
         localStorage.setItem('combinedCode', document.getElementById('sourceCode').innerText);
     }
 
@@ -107,7 +105,7 @@ ${localStorage.getItem('htmlCode') || ''}
     document.querySelectorAll('.nav-btn').forEach(button => {
         button.addEventListener('click', function() {
             const language = this.id.replace('Button', '').toLowerCase();
-            currentLanguage = language; // Update the current language
+            currentLanguage = language;
             initBlockly(toolboxes[language]);
 
             document.querySelectorAll('.section').forEach(div => {
@@ -116,7 +114,7 @@ ${localStorage.getItem('htmlCode') || ''}
                 }
             });
             document.getElementById('sourceCode').style.display = 'block';
-            document.getElementById('namebar').innerText = language.toUpperCase() + ' Generator'; // Update the namebar
+            document.getElementById('namebar').innerText = language.toUpperCase() + ' Generator';
         });
     });
 
@@ -133,7 +131,6 @@ ${localStorage.getItem('htmlCode') || ''}
         });
     });
 
-    // Initialize the workspace and load the combined code on page load
-    initBlockly(toolboxes.html); // Initialize the HTML workspace as default
-    updateSourceCodeDisplay(); // Display the combined code on page load
+    initBlockly(toolboxes.html);
+    updateSourceCodeDisplay();
 });

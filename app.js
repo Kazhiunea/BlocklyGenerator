@@ -1,15 +1,13 @@
 const express = require('express');
 const app = express();
 
-// Set EJS as the templating engine
 app.set('view engine', 'ejs');
-app.set('views', 'views');  // Specify the folder where the templates will be stored
+app.set('views', 'views');
 
-// Middleware to serve static files from 'public' directory
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.render('index');  // Use the EJS template named 'index'
+    res.render('index'); 
 });
 
 const PORT = process.env.PORT || 3000;

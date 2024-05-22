@@ -13,14 +13,15 @@
     <script src="/blocklyConfig/javaScriptToolbox.js"></script>
     <script src="/blocklyConfig/javaScriptBlocks.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/infoManager.js"></script>
 </head>
 <body>
     <div id="topbar">Blockly Code Generator</div>
     <div id="namebar" >HTML Generator</div>
     <div id="titlebar">
-        <div class="titlecontent">Blockly Workbench</div>
-        <div class="titlecontent">Live Preview</div>
-        <div class="titlecontent">Source Code</div>
+        <div class="titlecontent"><span>Blockly Workbench</span><button class="info-btn" data-popup="workbench">?</button></div>
+        <div class="titlecontent"><span>Live Preview</span><button class="info-btn" data-popup="preview">?</button></div>
+        <div class="titlecontent"><span>Source Code</span><button class="info-btn" data-popup="source">?</button></div>
     </div>
     <div id="navbar">
         <button class="nav-btn" id="htmlButton">HTML</button>
@@ -34,4 +35,8 @@
         <div class="section" id="sourceCode"></div>
     </div>
     <div id="copyPopup" style="display: none;">Copied</div>
+
+    <div id="popup-workbench" class="popup" style="display: none;">In the Blockly workbench you can place blocks to generate code. You can also switch the language generated with the buttons on the left side of the page.</div>
+    <div id="popup-preview" class="popup" style="display: none;">Here you can see what the document you are generated will look like. You can also interact with it. The field updates every time you make a change in the Blockly workspace.</div>
+    <div id="popup-source" class="popup" style="display: none;">Here you can see what the source code of the document you are generating looks like. You can also copy the code using the "Copy Source Code" button. The field updates every time you make a change in the Blockly workspace.</div>
 </html>

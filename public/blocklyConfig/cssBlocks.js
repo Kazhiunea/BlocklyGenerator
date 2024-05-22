@@ -1,4 +1,3 @@
-// Define the CSS generator
 Blockly.CSS = new Blockly.Generator('CSS');
 
 // Initialize the CSS code generation
