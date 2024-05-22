@@ -680,3 +680,362 @@ Blockly.HTML['descriptionItem'] = function (block) {
     var code = '<dt' + idAttribute + classAttribute + '>' + item + '</dt>\n<dd>' + description + '</dd>\n';
     return code;
 };
+
+Blockly.Blocks['button'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Button");
+        this.appendDummyInput()
+            .appendField("Text:")
+            .appendField(new Blockly.FieldTextInput("Click me"), "TEXT");
+        this.appendDummyInput()
+            .appendField("ID:")
+            .appendField(new Blockly.FieldTextInput(""), "ID");
+        this.appendDummyInput()
+            .appendField("Class:")
+            .appendField(new Blockly.FieldTextInput(""), "CLASS");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour("#ff69b4");
+        this.setTooltip("The <button> tag defines a clickable button.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_button.asp");
+    }
+};
+
+Blockly.HTML['button'] = function (block) {
+    var text = block.getFieldValue('TEXT');
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var code = '<button' + idAttribute + classAttribute + '>' + text + '</button>\n';
+    return code;
+};
+
+Blockly.Blocks['checkbox'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Checkbox");
+        this.appendDummyInput()
+            .appendField("Label:")
+            .appendField(new Blockly.FieldTextInput("Label"), "LABEL");
+        this.appendDummyInput()
+            .appendField("ID:")
+            .appendField(new Blockly.FieldTextInput(""), "ID");
+        this.appendDummyInput()
+            .appendField("Class:")
+            .appendField(new Blockly.FieldTextInput(""), "CLASS");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour("#ff69b4");
+        this.setTooltip("The <input> tag defines a checkbox.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_input.asp");
+    }
+};
+
+Blockly.HTML['checkbox'] = function (block) {
+    var label = block.getFieldValue('LABEL');
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var code = '<label' + idAttribute + classAttribute + '><input type="checkbox">' + label + '</label>\n';
+    return code;
+};
+
+Blockly.Blocks['radio_button'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Radio Button");
+        this.appendDummyInput()
+            .appendField("Label:")
+            .appendField(new Blockly.FieldTextInput("Label"), "LABEL");
+        this.appendDummyInput()
+            .appendField("Name:")
+            .appendField(new Blockly.FieldTextInput("radio"), "NAME");
+        this.appendDummyInput()
+            .appendField("ID:")
+            .appendField(new Blockly.FieldTextInput(""), "ID");
+        this.appendDummyInput()
+            .appendField("Class:")
+            .appendField(new Blockly.FieldTextInput(""), "CLASS");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour("#ff69b4");
+        this.setTooltip("The <input> tag defines a radio button.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_input.asp");
+    }
+};
+
+Blockly.HTML['radio_button'] = function (block) {
+    var label = block.getFieldValue('LABEL');
+    var name = block.getFieldValue('NAME');
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var code = '<label' + idAttribute + classAttribute + '><input type="radio" name="' + name + '">' + label + '</label>\n';
+    return code;
+};
+
+Blockly.Blocks['select_dropdown'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Select Dropdown");
+        this.appendDummyInput()
+            .appendField("ID:")
+            .appendField(new Blockly.FieldTextInput(""), "ID");
+        this.appendDummyInput()
+            .appendField("Class:")
+            .appendField(new Blockly.FieldTextInput(""), "CLASS");
+        this.appendStatementInput("OPTIONS")
+            .setCheck(null)
+            .appendField("Options");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour("#ff69b4");
+        this.setTooltip("The <select> tag defines a dropdown list.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_select.asp");
+    }
+};
+
+Blockly.HTML['select_dropdown'] = function (block) {
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var options = Blockly.HTML.statementToCode(block, 'OPTIONS');
+    var code = '<select' + idAttribute + classAttribute + '>\n' + options + '</select>\n';
+    return code;
+};
+
+Blockly.Blocks['option'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Option");
+        this.appendDummyInput()
+            .appendField("Text:")
+            .appendField(new Blockly.FieldTextInput("Option"), "TEXT");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour("#ff69b4");
+        this.setTooltip("The <option> tag defines an option in a dropdown list.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_option.asp");
+    }
+};
+
+Blockly.HTML['option'] = function (block) {
+    var text = block.getFieldValue('TEXT');
+    var code = '<option>' + text + '</option>\n';
+    return code;
+};
+
+Blockly.Blocks['abbr'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Abbreviation");
+        this.appendDummyInput()
+            .appendField("Title:")
+            .appendField(new Blockly.FieldTextInput("Full form"), "TITLE");
+        this.appendDummyInput()
+            .appendField("Abbreviation:")
+            .appendField(new Blockly.FieldTextInput("abbr"), "ABBR");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(230);
+        this.setTooltip("The <abbr> tag defines an abbreviation or acronym.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_abbr.asp");
+    }
+};
+
+Blockly.HTML['abbr'] = function (block) {
+    var title = block.getFieldValue('TITLE');
+    var abbr = block.getFieldValue('ABBR');
+    var code = '<abbr title="' + title + '">' + abbr + '</abbr>\n';
+    return code;
+};
+
+Blockly.Blocks['acronym'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Acronym");
+        this.appendDummyInput()
+            .appendField("Title:")
+            .appendField(new Blockly.FieldTextInput("Full form"), "TITLE");
+        this.appendDummyInput()
+            .appendField("Acronym:")
+            .appendField(new Blockly.FieldTextInput("ACR"), "ACRONYM");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(230);
+        this.setTooltip("The <acronym> tag defines an acronym.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_acronym.asp");
+    }
+};
+
+Blockly.HTML['acronym'] = function (block) {
+    var title = block.getFieldValue('TITLE');
+    var acronym = block.getFieldValue('ACRONYM');
+    var code = '<acronym title="' + title + '">' + acronym + '</acronym>\n';
+    return code;
+};
+
+Blockly.Blocks['audio'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Audio");
+        this.appendDummyInput()
+            .appendField("Source URL:")
+            .appendField(new Blockly.FieldTextInput("https://example.com/audio.mp3"), "SRC");
+        this.appendDummyInput()
+            .appendField("Controls")
+            .appendField(new Blockly.FieldCheckbox("TRUE"), "CONTROLS");
+        this.appendDummyInput()
+            .appendField("Autoplay")
+            .appendField(new Blockly.FieldCheckbox("FALSE"), "AUTOPLAY");
+        this.appendDummyInput()
+            .appendField("ID")
+            .appendField(new Blockly.FieldTextInput(""), "ID");
+        this.appendDummyInput()
+            .appendField("Class")
+            .appendField(new Blockly.FieldTextInput(""), "CLASS");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(310);
+        this.setTooltip("The <audio> tag is used to embed sound content.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_audio.asp");
+    }
+};
+
+Blockly.HTML['audio'] = function (block) {
+    var src = block.getFieldValue('SRC');
+    var controls = block.getFieldValue('CONTROLS') == 'TRUE' ? 'controls' : '';
+    var autoplay = block.getFieldValue('AUTOPLAY') == 'TRUE' ? 'autoplay' : '';
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var code = '<audio src="' + src + '" ' + controls + ' ' + autoplay + idAttribute + classAttribute + '></audio>\n';
+    return code;
+};
+
+Blockly.Blocks['video'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Video");
+        this.appendDummyInput()
+            .appendField("Source URL:")
+            .appendField(new Blockly.FieldTextInput("https://example.com/video.mp4"), "SRC");
+        this.appendDummyInput()
+            .appendField("Width:")
+            .appendField(new Blockly.FieldNumber(400, 0), "WIDTH");
+        this.appendDummyInput()
+            .appendField("Height:")
+            .appendField(new Blockly.FieldNumber(300, 0), "HEIGHT");
+        this.appendDummyInput()
+            .appendField("Controls")
+            .appendField(new Blockly.FieldCheckbox("TRUE"), "CONTROLS");
+        this.appendDummyInput()
+            .appendField("Autoplay")
+            .appendField(new Blockly.FieldCheckbox("FALSE"), "AUTOPLAY");
+        this.appendDummyInput()
+            .appendField("ID")
+            .appendField(new Blockly.FieldTextInput(""), "ID");
+        this.appendDummyInput()
+            .appendField("Class")
+            .appendField(new Blockly.FieldTextInput(""), "CLASS");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(310);
+        this.setTooltip("The <video> tag is used to embed video content.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_video.asp");
+    }
+};
+
+Blockly.HTML['video'] = function (block) {
+    var src = block.getFieldValue('SRC');
+    var width = block.getFieldValue('WIDTH');
+    var height = block.getFieldValue('HEIGHT');
+    var controls = block.getFieldValue('CONTROLS') == 'TRUE' ? 'controls' : '';
+    var autoplay = block.getFieldValue('AUTOPLAY') == 'TRUE' ? 'autoplay' : '';
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var code = '<video src="' + src + '" width="' + width + '" height="' + height + '" ' + controls + ' ' + autoplay + idAttribute + classAttribute + '></video>\n';
+    return code;
+};
+
+Blockly.Blocks['progress'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Progress");
+        this.appendDummyInput()
+            .appendField("Value:")
+            .appendField(new Blockly.FieldNumber(0, 0, 100), "VALUE");
+        this.appendDummyInput()
+            .appendField("Max:")
+            .appendField(new Blockly.FieldNumber(100, 0), "MAX");
+        this.appendDummyInput()
+            .appendField("ID")
+            .appendField(new Blockly.FieldTextInput(""), "ID");
+        this.appendDummyInput()
+            .appendField("Class")
+            .appendField(new Blockly.FieldTextInput(""), "CLASS");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(310);
+        this.setTooltip("The <progress> tag represents the completion progress of a task.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_progress.asp");
+    }
+};
+
+Blockly.HTML['progress'] = function (block) {
+    var value = block.getFieldValue('VALUE');
+    var max = block.getFieldValue('MAX');
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var code = '<progress value="' + value + '" max="' + max + '"' + idAttribute + classAttribute + '></progress>\n';
+    return code;
+};
+
+Blockly.Blocks['iframe'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Iframe");
+        this.appendDummyInput()
+            .appendField("Source URL:")
+            .appendField(new Blockly.FieldTextInput("https://example.com"), "SRC");
+        this.appendDummyInput()
+            .appendField("Width:")
+            .appendField(new Blockly.FieldNumber(400, 0), "WIDTH");
+        this.appendDummyInput()
+            .appendField("Height:")
+            .appendField(new Blockly.FieldNumber(300, 0), "HEIGHT");
+        this.appendDummyInput()
+            .appendField("ID")
+            .appendField(new Blockly.FieldTextInput(""), "ID");
+        this.appendDummyInput()
+            .appendField("Class")
+            .appendField(new Blockly.FieldTextInput(""), "CLASS");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(310);
+        this.setTooltip("The <iframe> tag specifies an inline frame.");
+        this.setHelpUrl("https://www.w3schools.com/tags/tag_iframe.asp");
+    }
+};
+
+Blockly.HTML['iframe'] = function (block) {
+    var src = block.getFieldValue('SRC');
+    var width = block.getFieldValue('WIDTH');
+    var height = block.getFieldValue('HEIGHT');
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var code = '<iframe src="' + src + '" width="' + width + '" height="' + height + '"' + idAttribute + classAttribute + '></iframe>\n';
+    return code;
+};

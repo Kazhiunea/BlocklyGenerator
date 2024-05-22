@@ -9,6 +9,8 @@ const htmlToolbox = `
     <block type="text"></block>
     <block type="newline"></block>
     <block type="heading"></block>
+    <block type="abbr"></block>
+    <block type="acronym"></block>
   </category>
   <category name="Lists" colour="#99cc99">
     <block type="unorderedList"></block>
@@ -25,6 +27,84 @@ const htmlToolbox = `
   <category name="Multimedia" colour="310">
     <block type="image"></block>
     <block type="hyperlink"></block>
+    <block type="video"></block>
+    <block type="audio"></block>
+    <block type="progress"></block>
+    <block type="iframe"></block>
+  </category>
+  <category name="Form Elements" colour="#ff69b4">
+    <block type="button"></block>
+    <block type="checkbox"></block>
+    <block type="radio_button"></block>
+    <block type="select_dropdown"></block>
+    <block type="option"></block>
+  </category>
+  <category name="Examples" colour="#cccccc">
+    <block type="document" gap="16">
+      <statement name="content">
+        <block type="title">
+          <statement name="content">
+            <block type="text">
+              <field name="content">My Webpage Title</field>
+              <next>
+                <block type="body">
+                  <statement name="content">
+                    <block type="paragraph">
+                      <statement name="content">
+                        <block type="text">
+                          <field name="content">Welcome to my webpage!</field>
+                        </block>
+                      </statement>
+                    </block>
+                  </statement>
+                </block>
+              </next>
+            </block>
+          </statement>
+        </block>
+      </statement>
+    </block>
+    <block type="body" gap="16">
+      <statement name="content">
+        <block type="image">
+          <field name="IMAGE">https://example.com/image.jpg</field>
+          <field name="ALT">Example Image</field>
+          <next>
+            <block type="paragraph">
+              <statement name="content">
+                <block type="text">
+                  <field name="content">This is an example caption.</field>
+                </block>
+              </statement>
+            </block>
+          </next>
+        </block>
+      </statement>
+    </block>
+    <block type="body" gap="16">
+      <statement name="content">
+        <block type="orderedList">
+          <statement name="content">
+            <block type="listElem">
+              <statement name="content">
+                <block type="text">
+                  <field name="content">First item</field>
+                </block>
+              </statement>
+              <next>
+                <block type="listElem">
+                  <statement name="content">
+                    <block type="text">
+                      <field name="content">Second item</field>
+                    </block>
+                  </statement>
+                </block>
+              </next>
+            </block>
+          </statement>
+        </block>
+      </statement>
+    </block>
   </category>
 </xml>
 `;

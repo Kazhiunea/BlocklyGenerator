@@ -1905,31 +1905,6 @@ Blockly.CSS['css_box_shadow'] = function(block) {
 };
 
 // Text-Shadow Block
-Blockly.Blocks['css_text_shadow'] = {
-    init: function() {
-        this.appendDummyInput()
-            .appendField("text-shadow")
-            .appendField(new Blockly.FieldTextInput("1px"), "H_OFFSET")
-            .appendField(new Blockly.FieldTextInput("1px"), "V_OFFSET")
-            .appendField(new Blockly.FieldTextInput("2px"), "BLUR")
-            .appendField(new Blockly.FieldColour("#000000"), "COLOR");
-        this.setPreviousStatement(true, "CSS");
-        this.setNextStatement(true, "CSS");
-        this.setColour(266);
-        this.setTooltip("Applies shadow to text.");
-        this.setHelpUrl("https://www.w3schools.com/cssref/css3_pr_text-shadow.asp");
-    }
-};
-
-Blockly.CSS['css_text_shadow'] = function(block) {
-    var hOffset = block.getFieldValue('H_OFFSET');
-    var vOffset = block.getFieldValue('V_OFFSET');
-    var blur = block.getFieldValue('BLUR');
-    var color = block.getFieldValue('COLOR');
-    var code = 'text-shadow: ' + hOffset + ' ' + vOffset + ' ' + blur + ' ' + color + ';\n';
-    return code;
-};
-
 ///////////////////////////////////////////////////////////////////////
 //Borders section
 /* Blocks in this section:

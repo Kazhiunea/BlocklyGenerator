@@ -281,12 +281,6 @@ const cssToolbox = `
         <field name="SPREAD">0px</field>
         <field name="COLOR">#000000</field>
     </block>
-    <block type="css_text_shadow">
-        <field name="H_OFFSET">1px</field>
-        <field name="V_OFFSET">1px</field>
-        <field name="BLUR">2px</field>
-        <field name="COLOR">#000000</field>
-    </block>
 </category>
 <category name="Borders" colour="184">
     <block type="css_border_width">
