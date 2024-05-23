@@ -80,10 +80,6 @@ Blockly.HTML['aside'] = function (block) {
     return code;
 };
 
-
-
-
-
 Blockly.HTML['textWithStyle'] = function (block) {
     var formating = block.getFieldValue('formating');
     var colour = block.getFieldValue('colour');
@@ -446,12 +442,6 @@ Blockly.Blocks['table'] = {
         this.appendDummyInput()
             .appendField("Table");
         this.appendDummyInput()
-            .appendField("Border size:")
-            .appendField(new Blockly.FieldNumber(0, 0, 10), "borderSize");
-        this.appendDummyInput()
-            .appendField("Border colour")
-            .appendField(new Blockly.FieldColour("#000000"), "colour");
-        this.appendDummyInput()
             .appendField("ID")
             .appendField(new Blockly.FieldTextInput(""), "ID");
         this.appendDummyInput()
@@ -468,14 +458,12 @@ Blockly.Blocks['table'] = {
 };
 
 Blockly.HTML['table'] = function (block) {
-    var borderSize = block.getFieldValue('borderSize');
-    var colour = block.getFieldValue('colour');
     var id = block.getFieldValue('ID');
     var className = block.getFieldValue('CLASS');
     var idAttribute = id ? ' id="' + id + '"' : '';
     var classAttribute = className ? ' class="' + className + '"' : '';
     var statements_content = Blockly.HTML.statementToCode(block, 'content');
-    var code = '<table border="' + borderSize + '" style="border-color:' + colour + ';"' + idAttribute + classAttribute + '>\n' + statements_content + '</table>\n';
+    var code = '<table' + idAttribute + classAttribute + '>\n' + statements_content + '</table>\n';
     return code;
 };
 
@@ -483,12 +471,6 @@ Blockly.Blocks['tableRow'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("Table row");
-        this.appendDummyInput()
-            .appendField("Border size:")
-            .appendField(new Blockly.FieldNumber(0, 0, 10), "borderSize");
-        this.appendDummyInput()
-            .appendField("Border colour")
-            .appendField(new Blockly.FieldColour("#000000"), "colour");
         this.appendDummyInput()
             .appendField("ID")
             .appendField(new Blockly.FieldTextInput(""), "ID");
@@ -506,14 +488,12 @@ Blockly.Blocks['tableRow'] = {
 };
 
 Blockly.HTML['tableRow'] = function (block) {
-    var borderSize = block.getFieldValue('borderSize');
-    var colour = block.getFieldValue('colour');
     var id = block.getFieldValue('ID');
     var className = block.getFieldValue('CLASS');
     var idAttribute = id ? ' id="' + id + '"' : '';
     var classAttribute = className ? ' class="' + className + '"' : '';
     var statements_content = Blockly.HTML.statementToCode(block, 'content');
-    var code = '<tr style="border:' + borderSize + 'px solid ' + colour + ';"' + idAttribute + classAttribute + '>\n' + statements_content + '</tr>\n';
+    var code = '<tr' + idAttribute + classAttribute + '>\n' + statements_content + '</tr>\n';
     return code;
 };
 
@@ -521,12 +501,6 @@ Blockly.Blocks['tableElement'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("Table element");
-        this.appendDummyInput()
-            .appendField("Border size:")
-            .appendField(new Blockly.FieldNumber(0, 0, 10), "borderSize");
-        this.appendDummyInput()
-            .appendField("Border colour")
-            .appendField(new Blockly.FieldColour("#000000"), "colour");
         this.appendDummyInput()
             .appendField("ID")
             .appendField(new Blockly.FieldTextInput(""), "ID");
@@ -544,17 +518,14 @@ Blockly.Blocks['tableElement'] = {
 };
 
 Blockly.HTML['tableElement'] = function (block) {
-    var borderSize = block.getFieldValue('borderSize');
-    var colour = block.getFieldValue('colour');
     var id = block.getFieldValue('ID');
     var className = block.getFieldValue('CLASS');
     var idAttribute = id ? ' id="' + id + '"' : '';
     var classAttribute = className ? ' class="' + className + '"' : '';
     var statements_content = Blockly.HTML.statementToCode(block, 'content');
-    var code = '<td style="border:' + borderSize + 'px solid ' + colour + ';"' + idAttribute + classAttribute + '>\n' + statements_content + '</td>\n';
+    var code = '<td' + idAttribute + classAttribute + '>\n' + statements_content + '</td>\n';
     return code;
 };
-
 Blockly.Blocks['orderedList'] = {
     init: function () {
         this.appendDummyInput()

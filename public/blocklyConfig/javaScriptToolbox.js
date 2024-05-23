@@ -81,4 +81,6 @@ const javaScriptToolbox = `
   <block type="js_set_element_text"></block>
   <block type="js_add_event_listener"></block>
 </category>
+
+</xml>
 `;

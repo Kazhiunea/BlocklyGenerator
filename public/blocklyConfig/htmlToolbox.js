@@ -40,30 +40,6 @@ const htmlToolbox = `
     <block type="option"></block>
   </category>
   <category name="Examples" colour="#cccccc">
-    <block type="document" gap="16">
-      <statement name="content">
-        <block type="title">
-          <statement name="content">
-            <block type="text">
-              <field name="content">My Webpage Title</field>
-              <next>
-                <block type="body">
-                  <statement name="content">
-                    <block type="paragraph">
-                      <statement name="content">
-                        <block type="text">
-                          <field name="content">Welcome to my webpage!</field>
-                        </block>
-                      </statement>
-                    </block>
-                  </statement>
-                </block>
-              </next>
-            </block>
-          </statement>
-        </block>
-      </statement>
-    </block>
     <block type="body" gap="16">
       <statement name="content">
         <block type="image">
@@ -105,6 +81,104 @@ const htmlToolbox = `
         </block>
       </statement>
     </block>
+    <block type="body" gap="16">
+    <statement name="content">
+      <block type="heading">
+        <field name="LEVEL">1</field>
+        <statement name="content">
+          <block type="text">
+            <field name="content">Welcome to My Blog</field>
+            <next>
+              <block type="paragraph">
+                <statement name="content">
+                  <block type="text">
+                    <field name="content">This is the first paragraph of my blog. I will share my thoughts and experiences here.</field>
+                    <next>
+                      <block type="unorderedList">
+                        <statement name="content">
+                          <block type="listElem">
+                            <statement name="content">
+                              <block type="text">
+                                <field name="content">First item</field>
+                              </block>
+                            </statement>
+                            <next>
+                              <block type="listElem">
+                                <statement name="content">
+                                  <block type="text">
+                                    <field name="content">Second item</field>
+                                  </block>
+                                </statement>
+                                <next>
+                                  <block type="listElem">
+                                    <statement name="content">
+                                      <block type="text">
+                                        <field name="content">Third item</field>
+                                      </block>
+                                    </statement>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="body" gap="16">
+    <statement name="content">
+      <block type="paragraph">
+        <statement name="content">
+          <block type="hyperlink">
+            <field name="HREF">https://example.com</field>
+            <field name="TEXT">Click here to visit example.com</field>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="body" gap="16">
+    <statement name="content">
+      <block type="table">
+        <statement name="content">
+          <block type="tableRow">
+            <statement name="content">
+              <block type="tableElement">
+                <field name="CONTENT">Header 1</field>
+                <next>
+                  <block type="tableElement">
+                    <field name="CONTENT">Header 2</field>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <next>
+              <block type="tableRow">
+                <statement name="content">
+                  <block type="tableElement">
+                    <field name="CONTENT">Data 1</field>
+                    <next>
+                      <block type="tableElement">
+                        <field name="CONTENT">Data 2</field>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
   </category>
 </xml>
 `;
