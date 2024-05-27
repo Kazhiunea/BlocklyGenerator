@@ -37,15 +37,12 @@ Blockly.JavaScript.ORDER_YIELD = 17;          // yield
 Blockly.JavaScript.ORDER_COMMA = 18;          // ,
 Blockly.JavaScript.ORDER_NONE = 99;           // (...)
 
-// Create the _blockToCode dictionary for JavaScript blocks
 Blockly.JavaScript.init = function(workspace) {};
 
-// Finish the JavaScript code generation
 Blockly.JavaScript.finish = function(code) {
     return code;
 };
 
-// Scrub function for JavaScript blocks
 Blockly.JavaScript.scrub_ = function(block, code) {
     var nextBlock = block.nextConnection && block.nextConnection.targetBlock();
     var nextCode = Blockly.JavaScript.blockToCode(nextBlock);
@@ -773,3 +770,64 @@ Blockly.Blocks['js_var_reference'] = {
     var code = element + '.addEventListener("' + event + '", function() {\n' + handler + '});\n';
     return code;
   };
+
+  Blockly.Blocks['js_break'] = {
+    init: function() {
+        this.appendDummyInput()
+            .appendField("break");
+        this.setPreviousStatement(true, null);
+        this.setColour(210);
+        this.setTooltip("Exit the current loop.");
+        this.setHelpUrl("https://www.w3schools.com/jsref/jsref_break.asp");
+    }
+};
+
+Blockly.JavaScript['js_break'] = function(block) {
+    var code = 'break;\n';
+    return code;
+};
+
+Blockly.Blocks['text_change_case'] = {
+  init: function() {
+      this.appendValueInput("TEXT")
+          .setCheck("String")
+          .appendField("to")
+          .appendField(new Blockly.FieldDropdown([["lower case", "TOLOWER"], ["upper case", "TOUPPER"]]), "CASE");
+      this.setOutput(true, "String");
+      this.setColour(160);
+      this.setTooltip("Change the case of the text to lower case or upper case.");
+      this.setHelpUrl("https://www.w3schools.com/jsref/jsref_tolowercase.asp");
+  }
+};
+
+Blockly.JavaScript['text_change_case'] = function(block) {
+  var dropdown_case = block.getFieldValue('CASE');
+  var value_text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC) || "''";
+  var code = '';
+
+  if (dropdown_case === 'TOLOWER') {
+      code = value_text + '.toLowerCase()';
+  } else if (dropdown_case === 'TOUPPER') {
+      code = value_text + '.toUpperCase()';
+  }
+
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['text_reverse'] = {
+  init: function() {
+    this.appendValueInput("TEXT")
+        .setCheck("String")
+        .appendField("reverse");
+    this.setOutput(true, "String");
+    this.setColour(160);
+    this.setTooltip("Reverses the order of characters in the text.");
+    this.setHelpUrl("https://www.w3schools.com/jsref/jsref_reverse.asp");
+  }
+};
+
+Blockly.JavaScript['text_reverse'] = function(block) {
+  var value_text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC) || "''";
+  var code = value_text + '.split(\'\').reverse().join(\'\')';
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};

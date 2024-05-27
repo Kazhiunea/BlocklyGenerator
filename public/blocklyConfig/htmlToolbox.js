@@ -7,7 +7,9 @@ const htmlToolbox = `
   </category>
   <category name="Text Elements" colour="#9999ff">
     <block type="text"></block>
-    <block type="newline"></block>
+    <block type="text_with_id"></block>
+    <block type="newline"></block> 
+    <block type="topic_break"></block>
     <block type="heading"></block>
     <block type="abbr"></block>
     <block type="acronym"></block>
@@ -34,10 +36,9 @@ const htmlToolbox = `
   </category>
   <category name="Form Elements" colour="#ff69b4">
     <block type="button"></block>
-    <block type="checkbox"></block>
-    <block type="radio_button"></block>
     <block type="select_dropdown"></block>
     <block type="option"></block>
+    <block type="input"></block>
   </category>
   <category name="Examples" colour="#cccccc">
     <block type="body" gap="16">
