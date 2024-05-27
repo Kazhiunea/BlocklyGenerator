@@ -1,5 +1,3 @@
-// Variable Declaration Block
-// Initialize the JavaScript generator
 Blockly.JavaScript = new Blockly.Generator('JavaScript');
 
 // Define the order values
@@ -39,572 +37,17 @@ Blockly.JavaScript.ORDER_YIELD = 17;          // yield
 Blockly.JavaScript.ORDER_COMMA = 18;          // ,
 Blockly.JavaScript.ORDER_NONE = 99;           // (...)
 
-// Create the _blockToCode dictionary for JavaScript blocks
 Blockly.JavaScript.init = function(workspace) {};
 
-// Finish the JavaScript code generation
 Blockly.JavaScript.finish = function(code) {
     return code;
 };
 
-// Scrub function for JavaScript blocks
 Blockly.JavaScript.scrub_ = function(block, code) {
     var nextBlock = block.nextConnection && block.nextConnection.targetBlock();
     var nextCode = Blockly.JavaScript.blockToCode(nextBlock);
     return code + nextCode;
 };
-
-/*
-// Variable Declaration Block (var, let, const)
-// Block for variable declaration
-Blockly.Blocks['js_var_declare'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("var")
-          .appendField(new Blockly.FieldTextInput("variable"), "VAR_NAME")
-          .appendField("=");
-      this.appendValueInput("VALUE")
-          .setCheck(null);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(230);
-      this.setTooltip("Declare a variable using var.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_variables.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_var_declare'] = function(block) {
-    var varName = block.getFieldValue('VAR_NAME');
-    var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-    var code = 'var ' + varName + ' = ' + value + ';\n';
-    return code;
-  };
-
-// Block for a string input
-Blockly.Blocks['js_var_reference'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("Variable")
-          .appendField(new Blockly.FieldTextInput("variable"), "VAR_NAME");
-      this.setOutput(true, null);
-      this.setColour(230);
-      this.setTooltip("Reference a variable.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_variables.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_var_reference'] = function(block) {
-    var varName = block.getFieldValue('VAR_NAME');
-    var code = varName;
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
-  };
-
-// Block for a number input
-Blockly.Blocks['js_text'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("String input = ")
-          .appendField(new Blockly.FieldTextInput("text"), "TEXT");
-      this.setOutput(true, null);
-      this.setColour(160);
-      this.setTooltip("A text value.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_strings.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_text'] = function(block) {
-    var text = block.getFieldValue('TEXT');
-    var code = '"' + text + '"';
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
-  };
-
-// Block for referencing a variable
-Blockly.Blocks['js_number'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("Number input = ")
-          .appendField(new Blockly.FieldNumber(0), "NUMBER");
-      this.setOutput(true, null);
-      this.setColour(160);
-      this.setTooltip("A number value.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_numbers.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_number'] = function(block) {
-    var number = block.getFieldValue('NUMBER');
-    var code = number;
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
-  };
-
-  Blockly.Blocks['js_var_assign'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField(new Blockly.FieldTextInput("variable"), "VAR_NAME")
-          .appendField("=");
-      this.appendValueInput("VALUE")
-          .setCheck(null);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(230);
-      this.setTooltip("Assign a value to a variable.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_variables.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_var_assign'] = function(block) {
-    var varName = block.getFieldValue('VAR_NAME');
-    var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-    var code = varName + ' = ' + value + ';\n';
-    return code;
-  };
-
-  Blockly.Blocks['js_addition'] = {
-    init: function() {
-      this.appendValueInput("A")
-          .setCheck("Number");
-      this.appendDummyInput()
-          .appendField("+");
-      this.appendValueInput("B")
-          .setCheck("Number");
-      this.setOutput(true, "Number");
-      this.setColour(160);
-      this.setTooltip("Addition");
-      this.setHelpUrl("https://www.w3schools.com/js/js_arithmetic.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_addition'] = function(block) {
-    var valueA = Blockly.JavaScript.valueToCode(block, 'A', Blockly.JavaScript.ORDER_ATOMIC) || '0';
-    var valueB = Blockly.JavaScript.valueToCode(block, 'B', Blockly.JavaScript.ORDER_ATOMIC) || '0';
-    var code = valueA + ' + ' + valueB;
-    return [code, Blockly.JavaScript.ORDER_ADDITION];
-  };
-
-  Blockly.Blocks['js_subtraction'] = {
-    init: function() {
-      this.appendValueInput("A")
-          .setCheck("Number");
-      this.appendDummyInput()
-          .appendField("-");
-      this.appendValueInput("B")
-          .setCheck("Number");
-      this.setOutput(true, "Number");
-      this.setColour(160);
-      this.setTooltip("Subtraction");
-      this.setHelpUrl("https://www.w3schools.com/js/js_arithmetic.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_subtraction'] = function(block) {
-    var valueA = Blockly.JavaScript.valueToCode(block, 'A', Blockly.JavaScript.ORDER_ATOMIC) || '0';
-    var valueB = Blockly.JavaScript.valueToCode(block, 'B', Blockly.JavaScript.ORDER_ATOMIC) || '0';
-    var code = valueA + ' - ' + valueB;
-    return [code, Blockly.JavaScript.ORDER_SUBTRACTION];
-  };
-
-  Blockly.Blocks['js_if'] = {
-    init: function() {
-      this.appendValueInput("CONDITION")
-          .setCheck("Boolean")
-          .appendField("if");
-      this.appendStatementInput("DO")
-          .setCheck(null)
-          .appendField("do");
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(210);
-      this.setTooltip("If statement.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_if_else.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_if'] = function(block) {
-    var condition = Blockly.JavaScript.valueToCode(block, 'CONDITION', Blockly.JavaScript.ORDER_NONE) || 'false';
-    var statements = Blockly.JavaScript.statementToCode(block, 'DO');
-    var code = 'if (' + condition + ') {\n' + statements + '}\n';
-    return code;
-  };
-
-  Blockly.Blocks['js_for_loop'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("for (var")
-          .appendField(new Blockly.FieldTextInput("i"), "VAR")
-          .appendField("=");
-      this.appendValueInput("START")
-          .setCheck("Number");
-      this.appendDummyInput()
-          .appendField(";")
-          .appendField(new Blockly.FieldTextInput("i"), "VAR")
-          .appendField("<");
-      this.appendValueInput("END")
-          .setCheck("Number");
-      this.appendDummyInput()
-          .appendField(";")
-          .appendField(new Blockly.FieldTextInput("i"), "VAR")
-          .appendField("++)");
-      this.appendStatementInput("DO")
-          .setCheck(null)
-          .appendField("do");
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(120);
-      this.setTooltip("For loop.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_loop_for.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_for_loop'] = function(block) {
-    var variable = block.getFieldValue('VAR');
-    var start = Blockly.JavaScript.valueToCode(block, 'START', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-    var end = Blockly.JavaScript.valueToCode(block, 'END', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-    var statements = Blockly.JavaScript.statementToCode(block, 'DO');
-    var code = 'for (var ' + variable + ' = ' + start + '; ' + variable + ' < ' + end + '; ' + variable + '++) {\n' + statements + '}\n';
-    return code;
-  };
-
-  Blockly.Blocks['js_while_loop'] = {
-    init: function() {
-      this.appendValueInput("CONDITION")
-          .setCheck("Boolean")
-          .appendField("while");
-      this.appendStatementInput("DO")
-          .setCheck(null)
-          .appendField("do");
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(120);
-      this.setTooltip("While loop.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_loop_while.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_while_loop'] = function(block) {
-    var condition = Blockly.JavaScript.valueToCode(block, 'CONDITION', Blockly.JavaScript.ORDER_NONE) || 'false';
-    var statements = Blockly.JavaScript.statementToCode(block, 'DO');
-    var code = 'while (' + condition + ') {\n' + statements + '}\n';
-    return code;
-  };
-
-  Blockly.Blocks['js_and'] = {
-    init: function() {
-      this.appendValueInput("A")
-          .setCheck("Boolean");
-      this.appendDummyInput()
-          .appendField("AND");
-      this.appendValueInput("B")
-          .setCheck("Boolean");
-      this.setOutput(true, "Boolean");
-      this.setColour(210);
-      this.setTooltip("Logical AND operation.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_comparisons.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_and'] = function(block) {
-    var valueA = Blockly.JavaScript.valueToCode(block, 'A', Blockly.JavaScript.ORDER_ATOMIC) || 'false';
-    var valueB = Blockly.JavaScript.valueToCode(block, 'B', Blockly.JavaScript.ORDER_ATOMIC) || 'false';
-    var code = valueA + ' && ' + valueB;
-    return [code, Blockly.JavaScript.ORDER_LOGICAL_AND];
-  };
-
-  Blockly.Blocks['js_or'] = {
-    init: function() {
-      this.appendValueInput("A")
-          .setCheck("Boolean");
-      this.appendDummyInput()
-          .appendField("OR");
-      this.appendValueInput("B")
-          .setCheck("Boolean");
-      this.setOutput(true, "Boolean");
-      this.setColour(210);
-      this.setTooltip("Logical OR operation.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_comparisons.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_or'] = function(block) {
-    var valueA = Blockly.JavaScript.valueToCode(block, 'A', Blockly.JavaScript.ORDER_ATOMIC) || 'false';
-    var valueB = Blockly.JavaScript.valueToCode(block, 'B', Blockly.JavaScript.ORDER_ATOMIC) || 'false';
-    var code = valueA + ' || ' + valueB;
-    return [code, Blockly.JavaScript.ORDER_LOGICAL_OR];
-  };
-
-  Blockly.Blocks['js_equal'] = {
-    init: function() {
-      this.appendValueInput("A")
-          .setCheck(null);
-      this.appendDummyInput()
-          .appendField("==");
-      this.appendValueInput("B")
-          .setCheck(null);
-      this.setOutput(true, "Boolean");
-      this.setColour(210);
-      this.setTooltip("Equality comparison.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_comparisons.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_equal'] = function(block) {
-    var valueA = Blockly.JavaScript.valueToCode(block, 'A', Blockly.JavaScript.ORDER_ATOMIC) || '0';
-    var valueB = Blockly.JavaScript.valueToCode(block, 'B', Blockly.JavaScript.ORDER_ATOMIC) || '0';
-    var code = valueA + ' == ' + valueB;
-    return [code, Blockly.JavaScript.ORDER_EQUALITY];
-  };
-
-  Blockly.Blocks['js_not_equal'] = {
-    init: function() {
-      this.appendValueInput("A")
-          .setCheck(null);
-      this.appendDummyInput()
-          .appendField("!=");
-      this.appendValueInput("B")
-          .setCheck(null);
-      this.setOutput(true, "Boolean");
-      this.setColour(210);
-      this.setTooltip("Inequality comparison.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_comparisons.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_not_equal'] = function(block) {
-    var valueA = Blockly.JavaScript.valueToCode(block, 'A', Blockly.JavaScript.ORDER_ATOMIC) || '0';
-    var valueB = Blockly.JavaScript.valueToCode(block, 'B', Blockly.JavaScript.ORDER_ATOMIC) || '0';
-    var code = valueA + ' != ' + valueB;
-    return [code, Blockly.JavaScript.ORDER_EQUALITY];
-  };
-
-  Blockly.Blocks['js_boolean'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField(new Blockly.FieldDropdown([["true", "true"], ["false", "false"]]), "BOOLEAN");
-      this.setOutput(true, "Boolean");
-      this.setColour(210);
-      this.setTooltip("A boolean value.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_booleans.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_boolean'] = function(block) {
-    var booleanValue = block.getFieldValue('BOOLEAN');
-    var code = booleanValue;
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
-  };
-
-  Blockly.Blocks['js_not'] = {
-    init: function() {
-      this.appendValueInput("BOOL")
-          .setCheck("Boolean")
-          .appendField("NOT");
-      this.setOutput(true, "Boolean");
-      this.setColour(210);
-      this.setTooltip("Logical NOT operation.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_comparisons.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_not'] = function(block) {
-    var bool = Blockly.JavaScript.valueToCode(block, 'BOOL', Blockly.JavaScript.ORDER_LOGICAL_NOT) || 'false';
-    var code = '!' + bool;
-    return [code, Blockly.JavaScript.ORDER_LOGICAL_NOT];
-  };
-
-  Blockly.Blocks['js_multiplication'] = {
-    init: function() {
-      this.appendValueInput("A")
-          .setCheck("Number");
-      this.appendDummyInput()
-          .appendField("*");
-      this.appendValueInput("B")
-          .setCheck("Number");
-      this.setOutput(true, "Number");
-      this.setColour(160);
-      this.setTooltip("Multiplies two numbers.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_arithmetic.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_multiplication'] = function(block) {
-    var valueA = Blockly.JavaScript.valueToCode(block, 'A', Blockly.JavaScript.ORDER_MULTIPLICATION) || '0';
-    var valueB = Blockly.JavaScript.valueToCode(block, 'B', Blockly.JavaScript.ORDER_MULTIPLICATION) || '0';
-    var code = valueA + ' * ' + valueB;
-    return [code, Blockly.JavaScript.ORDER_MULTIPLICATION];
-  };
-  
-
-  Blockly.Blocks['js_division'] = {
-    init: function() {
-      this.appendValueInput("A")
-          .setCheck("Number");
-      this.appendDummyInput()
-          .appendField("/");
-      this.appendValueInput("B")
-          .setCheck("Number");
-      this.setOutput(true, "Number");
-      this.setColour(160);
-      this.setTooltip("Divides two numbers.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_arithmetic.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_division'] = function(block) {
-    var valueA = Blockly.JavaScript.valueToCode(block, 'A', Blockly.JavaScript.ORDER_DIVISION) || '0';
-    var valueB = Blockly.JavaScript.valueToCode(block, 'B', Blockly.JavaScript.ORDER_DIVISION) || '0';
-    var code = valueA + ' / ' + valueB;
-    return [code, Blockly.JavaScript.ORDER_DIVISION];
-  };
-  
-  Blockly.Blocks['js_modulus'] = {
-    init: function() {
-      this.appendValueInput("A")
-          .setCheck("Number");
-      this.appendDummyInput()
-          .appendField("%");
-      this.appendValueInput("B")
-          .setCheck("Number");
-      this.setOutput(true, "Number");
-      this.setColour(160);
-      this.setTooltip("Returns the division remainder of two numbers.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_arithmetic.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_modulus'] = function(block) {
-    var valueA = Blockly.JavaScript.valueToCode(block, 'A', Blockly.JavaScript.ORDER_MODULUS) || '0';
-    var valueB = Blockly.JavaScript.valueToCode(block, 'B', Blockly.JavaScript.ORDER_MODULUS) || '0';
-    var code = valueA + ' % ' + valueB;
-    return [code, Blockly.JavaScript.ORDER_MODULUS];
-  };
-  
-  Blockly.Blocks['js_power'] = {
-    init: function() {
-      this.appendValueInput("A")
-          .setCheck("Number");
-      this.appendDummyInput()
-          .appendField("^");
-      this.appendValueInput("B")
-          .setCheck("Number");
-      this.setOutput(true, "Number");
-      this.setColour(160);
-      this.setTooltip("Returns the base to the exponent power, that is, base^exponent.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_arithmetic.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_power'] = function(block) {
-    var valueA = Blockly.JavaScript.valueToCode(block, 'A', Blockly.JavaScript.ORDER_EXPONENTIATION) || '0';
-    var valueB = Blockly.JavaScript.valueToCode(block, 'B', Blockly.JavaScript.ORDER_EXPONENTIATION) || '0';
-    var code = 'Math.pow(' + valueA + ', ' + valueB + ')';
-    return [code, Blockly.JavaScript.ORDER_EXPONENTIATION];
-  };
-
-  Blockly.Blocks['js_function_declare'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("function")
-          .appendField(new Blockly.FieldTextInput("myFunction"), "FUNC_NAME");
-      this.appendStatementInput("STATEMENTS")
-          .setCheck(null);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(290);
-      this.setTooltip("Declare a function.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_functions.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_function_declare'] = function(block) {
-    var funcName = block.getFieldValue('FUNC_NAME');
-    var statements = Blockly.JavaScript.statementToCode(block, 'STATEMENTS');
-    var code = 'function ' + funcName + '() {\n' + statements + '}\n';
-    return code;
-  };
-
-  
-  Blockly.Blocks['js_onclick'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("onClick for ID")
-          .appendField(new Blockly.FieldTextInput("elementID"), "ELEMENT_ID");
-      this.appendStatementInput("STATEMENTS")
-          .setCheck(null);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(65);
-      this.setTooltip("Set an onClick event for an element by ID.");
-      this.setHelpUrl("https://www.w3schools.com/jsref/event_onclick.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_onclick'] = function(block) {
-    var elementId = block.getFieldValue('ELEMENT_ID');
-    var statements = Blockly.JavaScript.statementToCode(block, 'STATEMENTS');
-    var code = 'document.getElementById("' + elementId + '").onclick = function() {\n' + statements + '};\n';
-    return code;
-  };
-
-  
-  Blockly.Blocks['js_get_element_by_id'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("getElementById")
-          .appendField(new Blockly.FieldTextInput("elementID"), "ELEMENT_ID");
-      this.setOutput(true, "Element");
-      this.setColour(210);
-      this.setTooltip("Get an element by its ID.");
-      this.setHelpUrl("https://www.w3schools.com/jsref/met_document_getelementbyid.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_get_element_by_id'] = function(block) {
-    var elementId = block.getFieldValue('ELEMENT_ID');
-    var code = 'document.getElementById("' + elementId + '")';
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
-  };
-  
-
-  Blockly.Blocks['js_alert'] = {
-    init: function() {
-      this.appendValueInput("TEXT")
-          .setCheck("String")
-          .appendField("alert");
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(160);
-      this.setTooltip("Display an alert dialog.");
-      this.setHelpUrl("https://www.w3schools.com/jsref/met_win_alert.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_alert'] = function(block) {
-    var text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_NONE) || '""';
-    var code = 'alert(' + text + ');\n';
-    return code;
-  };
-  
-  Blockly.Blocks['js_equals'] = {
-    init: function() {
-      this.appendValueInput("VAR1")
-          .setCheck(null)
-          .appendField("set");
-      this.appendValueInput("VAR2")
-          .setCheck(null)
-          .appendField("equal to");
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(160);
-      this.setTooltip("Set one variable equal to another.");
-      this.setHelpUrl("https://www.w3schools.com/js/js_operators.asp");
-    }
-  };
-  
-  Blockly.JavaScript['js_equals'] = function(block) {
-    var var1 = Blockly.JavaScript.valueToCode(block, 'VAR1', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-    var var2 = Blockly.JavaScript.valueToCode(block, 'VAR2', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-    var code = var1 + ' = ' + var2 + ';\n';
-    return code;
-  };*/
 
   Blockly.Blocks['js_if'] = {
     init: function() {
@@ -1327,3 +770,64 @@ Blockly.Blocks['js_var_reference'] = {
     var code = element + '.addEventListener("' + event + '", function() {\n' + handler + '});\n';
     return code;
   };
+
+  Blockly.Blocks['js_break'] = {
+    init: function() {
+        this.appendDummyInput()
+            .appendField("break");
+        this.setPreviousStatement(true, null);
+        this.setColour(210);
+        this.setTooltip("Exit the current loop.");
+        this.setHelpUrl("https://www.w3schools.com/jsref/jsref_break.asp");
+    }
+};
+
+Blockly.JavaScript['js_break'] = function(block) {
+    var code = 'break;\n';
+    return code;
+};
+
+Blockly.Blocks['text_change_case'] = {
+  init: function() {
+      this.appendValueInput("TEXT")
+          .setCheck("String")
+          .appendField("to")
+          .appendField(new Blockly.FieldDropdown([["lower case", "TOLOWER"], ["upper case", "TOUPPER"]]), "CASE");
+      this.setOutput(true, "String");
+      this.setColour(160);
+      this.setTooltip("Change the case of the text to lower case or upper case.");
+      this.setHelpUrl("https://www.w3schools.com/jsref/jsref_tolowercase.asp");
+  }
+};
+
+Blockly.JavaScript['text_change_case'] = function(block) {
+  var dropdown_case = block.getFieldValue('CASE');
+  var value_text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC) || "''";
+  var code = '';
+
+  if (dropdown_case === 'TOLOWER') {
+      code = value_text + '.toLowerCase()';
+  } else if (dropdown_case === 'TOUPPER') {
+      code = value_text + '.toUpperCase()';
+  }
+
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['text_reverse'] = {
+  init: function() {
+    this.appendValueInput("TEXT")
+        .setCheck("String")
+        .appendField("reverse");
+    this.setOutput(true, "String");
+    this.setColour(160);
+    this.setTooltip("Reverses the order of characters in the text.");
+    this.setHelpUrl("https://www.w3schools.com/jsref/jsref_reverse.asp");
+  }
+};
+
+Blockly.JavaScript['text_reverse'] = function(block) {
+  var value_text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC) || "''";
+  var code = value_text + '.split(\'\').reverse().join(\'\')';
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};

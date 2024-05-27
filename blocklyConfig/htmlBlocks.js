@@ -361,6 +361,23 @@ Blockly.HTML['newline'] = function (block) {
     return code;
 };
 
+Blockly.Blocks['topic_break'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Topic break");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(230);
+      this.setTooltip("The <hr> tag defines a thematic break in an HTML page (e.g., a shift of topic).");
+      this.setHelpUrl("https://www.w3schools.com/tags/tag_hr.asp");
+    }
+  };
+  
+  Blockly.HTML['topic_break'] = function(block) {
+    var code = '<hr>\n';
+    return code;
+  };
+
 Blockly.Blocks['heading'] = {
     init: function () {
         this.appendDummyInput()
@@ -1010,3 +1027,89 @@ Blockly.HTML['iframe'] = function (block) {
     var code = '<iframe src="' + src + '" width="' + width + '" height="' + height + '"' + idAttribute + classAttribute + '></iframe>\n';
     return code;
 };
+
+Blockly.Blocks['text_with_id'] = {
+    init: function () {
+      this.appendDummyInput()
+          .appendField("Text")
+          .appendField(new Blockly.FieldTextInput(""), "content");
+      this.appendDummyInput()
+          .appendField("ID")
+          .appendField(new Blockly.FieldTextInput(""), "ID");
+      this.appendDummyInput()
+          .appendField("Class")
+          .appendField(new Blockly.FieldTextInput(""), "CLASS");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(230);
+      this.setTooltip("A text field");
+      this.setHelpUrl("");
+    }
+  };
+  
+  Blockly.HTML['text_with_id'] = function (block) {
+    var text = block.getFieldValue('content');
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var code = '<span' + idAttribute + classAttribute + '>' + text + '</span>\n';
+    return code;
+  };
+
+  Blockly.Blocks['input'] = {
+    init: function () {
+      this.appendDummyInput()
+          .appendField(new Blockly.FieldDropdown([
+              ["text", "text"],
+              ["email", "email"],
+              ["number", "number"],
+              ["password", "password"],
+              ["checkbox", "checkbox"],
+              ["radio", "radio"],
+              ["button", "button"],
+              ["color", "color"],
+              ["date", "date"],
+              ["datetime-local", "datetime-local"],
+              ["file", "file"],
+              ["hidden", "hidden"],
+              ["image", "image"],
+              ["month", "month"],
+              ["range", "range"],
+              ["reset", "reset"],
+              ["search", "search"],
+              ["submit", "submit"],
+              ["tel", "tel"],
+              ["time", "time"],
+              ["url", "url"],
+              ["week", "week"]
+          ]), "TYPE")
+          .appendField("input");
+      this.appendDummyInput()
+          .appendField("Value:")
+          .appendField(new Blockly.FieldTextInput(""), "VALUE");
+      this.appendDummyInput()
+          .appendField("ID:")
+          .appendField(new Blockly.FieldTextInput(""), "ID");
+      this.appendDummyInput()
+          .appendField("Class:")
+          .appendField(new Blockly.FieldTextInput(""), "CLASS");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour("#ff69b4");
+      this.setTooltip("The <input> tag defines an input element.");
+      this.setHelpUrl("https://www.w3schools.com/tags/tag_input.asp");
+    }
+  };
+  
+  Blockly.HTML['input'] = function (block) {
+    var type = block.getFieldValue('TYPE');
+    var value = block.getFieldValue('VALUE');
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var code = '<input type="' + type + '" value="' + value + '"' + idAttribute + classAttribute + ' />\n';
+    return code;
+  };
+  
