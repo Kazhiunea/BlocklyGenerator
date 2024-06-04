@@ -682,6 +682,9 @@ Blockly.Blocks['button'] = {
         this.appendDummyInput()
             .appendField("Class:")
             .appendField(new Blockly.FieldTextInput(""), "CLASS");
+        this.appendDummyInput()
+            .appendField("Onclick:")
+            .appendField(new Blockly.FieldTextInput(""), "ONCLICK");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setColour("#ff69b4");
@@ -694,9 +697,11 @@ Blockly.HTML['button'] = function (block) {
     var text = block.getFieldValue('TEXT');
     var id = block.getFieldValue('ID');
     var className = block.getFieldValue('CLASS');
+    var onclick = block.getFieldValue('ONCLICK');
     var idAttribute = id ? ' id="' + id + '"' : '';
     var classAttribute = className ? ' class="' + className + '"' : '';
-    var code = '<button' + idAttribute + classAttribute + '>' + text + '</button>\n';
+    var onclickAttribute = onclick ? ' onclick="' + onclick + '()"' : '';
+    var code = '<button' + idAttribute + classAttribute + onclickAttribute + '>' + text + '</button>\n';
     return code;
 };
 
@@ -1113,3 +1118,34 @@ Blockly.Blocks['text_with_id'] = {
     return code;
   };
   
+
+  Blockly.Blocks['div'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Div");
+      this.appendDummyInput()
+          .appendField("ID")
+          .appendField(new Blockly.FieldTextInput(""), "ID");
+      this.appendDummyInput()
+          .appendField("Class")
+          .appendField(new Blockly.FieldTextInput(""), "CLASS");
+      this.appendStatementInput("CONTENT")
+          .setCheck(null)
+          .appendField("Content");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(0);
+      this.setTooltip("A div block");
+      this.setHelpUrl("");
+    }
+  };
+  
+  Blockly.HTML['div'] = function(block) {
+    var id = block.getFieldValue('ID');
+    var className = block.getFieldValue('CLASS');
+    var content = Blockly.HTML.statementToCode(block, 'CONTENT');
+    var idAttribute = id ? ' id="' + id + '"' : '';
+    var classAttribute = className ? ' class="' + className + '"' : '';
+    var code = '<div' + idAttribute + classAttribute + '>\n' + content + '</div>\n';
+    return code;
+  };

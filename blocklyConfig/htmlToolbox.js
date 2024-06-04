@@ -4,6 +4,7 @@ const htmlToolbox = `
     <block type="body"></block>
     <block type="title"></block>
     <block type="paragraph"></block>
+    <block type="div"></block>
   </category>
   <category name="Text Elements" colour="#9999ff">
     <block type="text"></block>

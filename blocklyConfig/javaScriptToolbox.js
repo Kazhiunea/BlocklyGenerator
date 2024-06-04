@@ -38,6 +38,7 @@ const javaScriptToolbox = `
   <block type="js_get_element_by_id"></block>
   <block type="js_set_element_text"></block>
   <block type="js_add_event_listener"></block>
+  <block type="define_function"></block>
 </category>
 
 </xml>

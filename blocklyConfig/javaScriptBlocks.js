@@ -115,7 +115,7 @@ Blockly.Blocks['js_comparison'] = {
     var code;
     switch (operator) {
       case 'EQ':
-        code = valueA + ' == ' + valueB;
+        code = valueA + ' === ' + valueB;
         break;
       case 'NEQ':
         code = valueA + ' != ' + valueB;
@@ -729,20 +729,21 @@ Blockly.Blocks['js_var_reference'] = {
       this.appendValueInput("TEXT")
           .setCheck("String")
           .appendField("to");
+      this.setInputsInline(true); // Make the inputs inline
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(30);
       this.setTooltip("Set the text content of an element.");
       this.setHelpUrl("https://www.w3schools.com/jsref/prop_html_innertext.asp");
     }
-  };
+};
   
-  Blockly.JavaScript['js_set_element_text'] = function(block) {
+Blockly.JavaScript['js_set_element_text'] = function(block) {
     var element = Blockly.JavaScript.valueToCode(block, 'ELEMENT', Blockly.JavaScript.ORDER_ATOMIC);
     var text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC);
     var code = element + '.innerText = ' + text + ';\n';
     return code;
-  };
+};
 
   Blockly.Blocks['js_add_event_listener'] = {
     init: function() {
@@ -830,4 +831,26 @@ Blockly.JavaScript['text_reverse'] = function(block) {
   var value_text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC) || "''";
   var code = value_text + '.split(\'\').reverse().join(\'\')';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['define_function'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("function")
+        .appendField(new Blockly.FieldTextInput("myFunction"), "FUNC_NAME");
+    this.appendStatementInput("STATEMENTS")
+        .setCheck(null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(30);
+    this.setTooltip("Define a new function.");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.JavaScript['define_function'] = function(block) {
+  var functionName = block.getFieldValue('FUNC_NAME');
+  var statements = Blockly.JavaScript.statementToCode(block, 'STATEMENTS');
+  var code = 'function ' + functionName + '() {\n' + statements + '}\n';
+  return code;
 };
